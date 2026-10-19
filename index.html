@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Task App - Funcional</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="index.css" />
+</head>
+<body>
+
+  <main class="todo-wrapper">
+    <header class="app-header">
+      <h1 class="app-title">Task Web</h1>
+      <button type="button" class="theme-toggle-btn" id="themeToggle" aria-label="Cambiar tema">🌓</button>
+    </header>
+
+    <section class="input-container">
+      <div class="input-row">
+        <input 
+          type="text" 
+          id="taskInput" 
+          class="task-input" 
+          placeholder="Añade una tarea..." 
+          autocomplete="off"
+        />
+        <button type="button" class="btn-add" id="addBtn">+</button>
+      </div>
+      <p class="error-message" id="errorMessage">Debes añadir una tarea.</p>
+    </section>
+
+    <section class="tasks-container">
+      <ul class="task-list" id="taskList">
+      </ul>
+    </section>
+
+    <footer class="counters-footer">
+      <div class="counter-badge counter-total" id="badgeTotal">
+        <span class="badge-label">Total</span>
+        <span class="badge-value" id="countTotal">0</span>
+      </div>
+      <div class="counter-badge counter-completed" id="badgeCompleted">
+        <span class="badge-label">Completado</span>
+        <span class="badge-value" id="countCompleted">0</span>
+      </div>
+      <div class="counter-badge counter-incompleted" id="badgeIncompleted">
+        <span class="badge-label">Incompleto</span>
+        <span class="badge-value" id="countIncompleted">0</span>
+      </div>
+    </footer>
+  </main>
+
+  <!-- Asegúrate de que este archivo se llame index.js y esté en la misma carpeta -->
+  <script src="index.js"></script>
+</body>
+</html>

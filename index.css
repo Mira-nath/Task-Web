@@ -1,0 +1,364 @@
+:root {
+  --bg-body: #f4f5f7;
+  --bg-card: #ffffff;
+  --bg-input: #eaedf2;
+  --border-color: #d8deeb;
+  
+  --text-primary: #2d3748;
+  --text-secondary: #718096;
+  --text-completed: #a0aec0;
+
+  --accent-purple: #8b5cf6;
+  --accent-purple-soft: #f3e8ff;
+  
+  --accent-green: #10b981;
+  --accent-green-soft: #d1fae5;
+
+  --accent-rose: #f43f5e;
+  --accent-rose-soft: #ffe4e6;
+
+  /* Colores para Hover en Modo Claro */
+  --hover-delete-bg: #f43f5e;
+  --hover-delete-text: #000000;
+
+  --hover-check-bg: #10b981;
+  --hover-check-text: #000000;
+
+  --shadow-soft: 0 10px 30px -5px rgba(0, 0, 0, 0.05), 0 4px 12px -2px rgba(0, 0, 0, 0.03);
+}
+
+[data-theme="dark"] {
+  --bg-body: #121824;
+  --bg-card: #1c2433;
+  --bg-input: #151c28;
+  --border-color: #2e3a50;
+  
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-completed: #475569;
+
+  --accent-purple: #a78bfa;
+  --accent-purple-soft: #2e1065;
+  
+  --accent-green: #34d399;
+  --accent-green-soft: #064e3b;
+
+  --accent-rose: #fb7185;
+  --accent-rose-soft: #4c0519;
+
+  /* Colores para Hover en Modo Oscuro */
+  --hover-delete-bg: #fb7185;
+  --hover-delete-text: #ffffff;
+
+  --hover-check-bg: #34d399;
+  --hover-check-text: #ffffff;
+
+  --shadow-soft: 0 12px 35px -5px rgba(0, 0, 0, 0.4);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg-body: #121824;
+    --bg-card: #1c2433;
+    --bg-input: #151c28;
+    --border-color: #2e3a50;
+    
+    --text-primary: #f1f5f9;
+    --text-secondary: #94a3b8;
+    --text-completed: #475569;
+
+    --accent-purple: #a78bfa;
+    --accent-purple-soft: #2e1065;
+    
+    --accent-green: #34d399;
+    --accent-green-soft: #064e3b;
+
+    --accent-rose: #fb7185;
+    --accent-rose-soft: #4c0519;
+
+    /* Colores para Hover en Modo Oscuro */
+    --hover-delete-bg: #fb7185;
+    --hover-delete-text: #ffffff;
+
+    --hover-check-bg: #34d399;
+    --hover-check-text: #ffffff;
+
+    --shadow-soft: 0 12px 35px -5px rgba(0, 0, 0, 0.4);
+  }
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+html, body {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden; 
+}
+
+body {
+  background-color: var(--bg-body);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+}
+
+.todo-wrapper {
+  background: var(--bg-card);
+  width: 100%;
+  max-width: 540px;
+  max-height: 90vh;
+  border-radius: 20px;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-soft);
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
+.app-title {
+  color: var(--text-primary);
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.theme-toggle-btn {
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+}
+
+.input-container {
+  margin-bottom: 1.25rem;
+}
+
+.input-row {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.task-input {
+  flex: 1;
+  background: var(--bg-input);
+  border: 1.5px solid var(--border-color);
+  padding: 0.8rem 1rem;
+  border-radius: 12px;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  outline: none;
+}
+
+.task-input::placeholder {
+  color: var(--text-secondary);
+}
+
+.task-input:focus {
+  border-color: var(--accent-purple);
+}
+
+.btn-add {
+  background: var(--accent-purple);
+  color: #ffffff;
+  border: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  font-size: 1.4rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.btn-add:hover {
+  opacity: 0.9;
+}
+
+.error-message {
+  color: var(--accent-rose);
+  font-size: 0.82rem;
+  font-weight: 500;
+  margin-top: 0.4rem;
+  visibility: hidden;
+}
+
+.error-message.visible {
+  visibility: visible;
+}
+
+.tasks-container {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 1.25rem;
+  padding-right: 4px;
+}
+
+.tasks-container::-webkit-scrollbar {
+  width: 5px;
+}
+
+.tasks-container::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 10px;
+}
+
+.task-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.task-card {
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 0.75rem 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.task-text-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.task-text {
+  color: var(--text-primary);
+  font-size: 0.92rem;
+  line-height: 1.4;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+.task-card.completed {
+  opacity: 0.65;
+}
+
+.task-card.completed .task-text {
+  text-decoration: line-through;
+  color: var(--text-completed);
+}
+
+.btn-action {
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+/* Icono Lápiz Minimalista */
+.pencil-icon {
+  width: 15px;
+  height: 15px;
+  fill: currentColor;
+}
+
+.btn-delete {
+  color: var(--accent-rose);
+}
+
+/* Hover Eliminar */
+.btn-delete:hover {
+  background: var(--hover-delete-bg);
+  color: var(--hover-delete-text);
+}
+
+.task-actions-right {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.btn-edit {
+  color: var(--text-secondary);
+}
+
+.btn-edit:hover {
+  background: var(--border-color);
+  color: var(--text-primary);
+}
+
+.btn-check {
+  color: var(--accent-green);
+  font-weight: 700;
+}
+
+/* Hover Completar */
+.btn-check:hover {
+  background: var(--hover-check-bg);
+  color: var(--hover-check-text);
+}
+
+.counters-footer {
+  display: flex;
+  gap: 0.6rem;
+  justify-content: space-between;
+}
+
+.counter-badge {
+  flex: 1;
+  border-radius: 12px;
+  padding: 0.6rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.1rem;
+}
+
+.badge-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.badge-value {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.counter-total {
+  background: var(--accent-purple-soft);
+  color: var(--accent-purple);
+}
+
+.counter-completed {
+  background: var(--accent-green-soft);
+  color: var(--accent-green);
+}
+
+.counter-incompleted {
+  background: var(--accent-rose-soft);
+  color: var(--accent-rose);
+}
