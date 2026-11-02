@@ -101,7 +101,6 @@ taskList.addEventListener('click', (e) => {
   }
 });
 
-// Seguridad contra inyecciones HTML
 function escapeHTML(str) {
   return str.replace(/[&<>'"]/g, 
     tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
