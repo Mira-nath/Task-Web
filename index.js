@@ -1,8 +1,10 @@
-let tasks = [
-  { id: 1, text: "¡Bienvenido a la lista de tareas!", completed: true },
-  { id: 2, text: "Empieza a organizar tu dia.", completed: false },
-  { id: 3, text: "Añade tus pendientes.", completed: false }
-];
+import fetchService from './fetchService.js';
+
+// URL de tu servidor local (la base de datos simulada en db.json)
+const URL_API = 'http://localhost:3000/tasks';
+
+// Empezamos con la lista vacía porque ahora los datos vienen del servidor
+let tasks = [];
 
 const taskInput = document.getElementById('taskInput');
 const addBtn = document.getElementById('addBtn');
@@ -12,6 +14,17 @@ const countTotal = document.getElementById('countTotal');
 const countCompleted = document.getElementById('countCompleted');
 const countIncompleted = document.getElementById('countIncompleted');
 const themeToggle = document.getElementById('themeToggle');
+
+// 1. FUNCIÓN PARA OBTENER LAS TAREAS DE LA BASE DE DATOS (GET)
+async function cargarTareas() {
+  try {
+    const resultado = await fetchService.get(URL_API);
+    tasks = resultado.data; // Guardamos las tareas que vienen de db.json
+    renderTasks();          // Pintamos en pantalla
+  } catch (error) {
+    console.error("Error al cargar las tareas:", error);
+  }
+}
 
 function renderTasks() {
   taskList.innerHTML = '';
@@ -51,7 +64,8 @@ function updateCounters() {
   countIncompleted.textContent = incompleted;
 }
 
-function addTask() {
+// 2. FUNCIÓN PARA AGREGAR TAREA (POST)
+async function addTask() {
   const text = taskInput.value.trim();
 
   if (text === '') {
@@ -61,43 +75,62 @@ function addTask() {
 
   errorMessage.classList.remove('visible');
   
-  const newTask = {
-    id: Date.now(),
+  const nuevaTarea = {
     text: text,
     completed: false
   };
 
-  tasks.push(newTask);
-  taskInput.value = '';
-  renderTasks();
+  try {
+    await fetchService.post(URL_API, nuevaTarea);
+    taskInput.value = '';
+    cargarTareas(); // Recargamos la lista desde el servidor para ver la nueva
+  } catch (error) {
+    console.error("Error al crear la tarea:", error);
+  }
 }
 
-taskList.addEventListener('click', (e) => {
+// 3. EVENTOS DE LA LISTA (ELIMINAR, EDITAR, COMPLETAR)
+taskList.addEventListener('click', async (e) => {
   const btn = e.target.closest('button');
   if (!btn) return;
 
-  const id = Number(btn.getAttribute('data-id'));
+  const id = btn.getAttribute('data-id');
 
+  // ELIMINAR (DELETE)
   if (btn.classList.contains('btn-delete')) {
-    tasks = tasks.filter(task => task.id !== id);
-    renderTasks();
-  } else if (btn.classList.contains('btn-edit')) {
-    const task = tasks.find(task => task.id === id);
+    try {
+      await fetchService.del(`${URL_API}/${id}`);
+      cargarTareas();
+    } catch (error) {
+      console.error("Error al eliminar la tarea:", error);
+    }
+  } 
+  // EDITAR (PUT / PATCH)
+  else if (btn.classList.contains('btn-edit')) {
+    const task = tasks.find(t => String(t.id) === String(id));
     if (task) {
       const newText = prompt("Edita tu tarea:", task.text);
       if (newText !== null && newText.trim() !== '') {
-        task.text = newText.trim();
-        renderTasks();
+        try {
+          await fetchService.patch(`${URL_API}/${id}`, { text: newText.trim() });
+          cargarTareas();
+        } catch (error) {
+          console.error("Error al editar la tarea:", error);
+        }
       }
     }
-  } else if (btn.classList.contains('btn-check')) {
-    tasks = tasks.map(task => {
-      if (task.id === id) {
-        return { ...task, completed: !task.completed };
+  } 
+  // COMPLETAR / DESCOMPLETAR (PATCH)
+  else if (btn.classList.contains('btn-check')) {
+    const task = tasks.find(t => String(t.id) === String(id));
+    if (task) {
+      try {
+        await fetchService.patch(`${URL_API}/${id}`, { completed: !task.completed });
+        cargarTareas();
+      } catch (error) {
+        console.error("Error al actualizar el estado de la tarea:", error);
       }
-      return task;
-    });
-    renderTasks();
+    }
   }
 });
 
@@ -130,4 +163,5 @@ themeToggle.addEventListener('click', () => {
   }
 });
 
-renderTasks();
+// Al cargar la página, traemos los datos del servidor por primera vez
+cargarTareas();

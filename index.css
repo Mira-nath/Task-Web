@@ -3,21 +3,20 @@
   --bg-card: #ffffff;
   --bg-input: #eaedf2;
   --border-color: #d8deeb;
-  
+
   --text-primary: #2d3748;
   --text-secondary: #718096;
   --text-completed: #a0aec0;
 
   --accent-purple: #8b5cf6;
   --accent-purple-soft: #f3e8ff;
-  
+
   --accent-green: #10b981;
   --accent-green-soft: #d1fae5;
 
   --accent-rose: #f43f5e;
   --accent-rose-soft: #ffe4e6;
 
-  /* Colores para Hover en Modo Claro */
   --hover-delete-bg: #f43f5e;
   --hover-delete-text: #000000;
 
@@ -32,14 +31,14 @@
   --bg-card: #1c2433;
   --bg-input: #151c28;
   --border-color: #2e3a50;
-  
+
   --text-primary: #f1f5f9;
   --text-secondary: #94a3b8;
   --text-completed: #475569;
 
   --accent-purple: #a78bfa;
   --accent-purple-soft: #2e1065;
-  
+
   --accent-green: #34d399;
   --accent-green-soft: #064e3b;
 
@@ -62,14 +61,14 @@
     --bg-card: #1c2433;
     --bg-input: #151c28;
     --border-color: #2e3a50;
-    
+
     --text-primary: #f1f5f9;
     --text-secondary: #94a3b8;
     --text-completed: #475569;
 
     --accent-purple: #a78bfa;
     --accent-purple-soft: #2e1065;
-    
+
     --accent-green: #34d399;
     --accent-green-soft: #064e3b;
 
@@ -95,10 +94,11 @@
   transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
 }
 
-html, body {
+html,
+body {
   height: 100vh;
   width: 100vw;
-  overflow: hidden; 
+  overflow: hidden;
 }
 
 body {
@@ -278,7 +278,6 @@ body {
   transition: all 0.2s ease;
 }
 
-/* Icono Lápiz Minimalista */
 .pencil-icon {
   width: 15px;
   height: 15px;
@@ -289,7 +288,6 @@ body {
   color: var(--accent-rose);
 }
 
-/* Hover Eliminar */
 .btn-delete:hover {
   background: var(--hover-delete-bg);
   color: var(--hover-delete-text);
@@ -314,7 +312,6 @@ body {
   font-weight: 700;
 }
 
-/* Hover Completar */
 .btn-check:hover {
   background: var(--hover-check-bg);
   color: var(--hover-check-text);
